@@ -20,8 +20,8 @@ export default function ActivitiesPage() {
     syncActivities();
   }, []);
 
-  /** deletes a activity from the API
-   * A vaild token is required
+  /** deletes an activity from the API
+   * A valid token is required
    */
   async function deleteActivity(id) {
     try {
@@ -50,6 +50,9 @@ export default function ActivitiesPage() {
         ...prev,
         [id]: "You are not authorized to delete this activity.",
       }));
+
+      /** auto clear after 5 seconds
+      // used ChatGPT to help me with this*/
       setTimeout(() => {
         setDeleteErrors((prev) => ({ ...prev, [id]: null }));
       }, 5000);
