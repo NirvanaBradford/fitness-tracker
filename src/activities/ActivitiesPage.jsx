@@ -8,6 +8,7 @@ import ActivityForm from "./ActivityForm";
 
 export default function ActivitiesPage() {
   const [activities, setActivities] = useState([]);
+  const [deleteErrors, setDeleteErrors] = useState({});
   const { token } = useAuth();
 
   const syncActivities = async () => {
@@ -43,8 +44,15 @@ export default function ActivitiesPage() {
       }
 
       setActivities((prev) => prev.filter((a) => a.id !== Number(id)));
+      setDeleteErrors((prev) => ({ ...prev, [id]: null }));
     } catch (error) {
-      console.error("Delete failed:", error.message);
+      setDeleteErrors((prev) => ({
+        ...prev,
+        [id]: "You are not authorized to delete this activity.",
+      }));
+      setTimeout(() => {
+        setDeleteErrors((prev) => ({ ...prev, [id]: null }));
+      }, 5000);
     }
   }
 
@@ -55,6 +63,7 @@ export default function ActivitiesPage() {
         activities={activities}
         token={token}
         deleteActivity={deleteActivity}
+        deleteErrors={deleteErrors}
       />
       <ActivityForm syncActivities={syncActivities} />
     </>
