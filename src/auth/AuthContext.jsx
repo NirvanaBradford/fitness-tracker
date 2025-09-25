@@ -35,6 +35,8 @@ export function AuthProvider({ children }) {
       body: JSON.stringify(credentials),
     });
     const result = await response.json();
+    console.log(result);
+
     if (!response.ok) {
       throw Error(result.message);
     }

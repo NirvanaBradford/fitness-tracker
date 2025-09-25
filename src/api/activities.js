@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API;
+export const API = import.meta.env.VITE_API;
 
 /** Fetches an array of activities from the API. */
 export async function getActivities() {
@@ -20,6 +20,8 @@ export async function createActivity(token, activity) {
   if (!token) {
     throw Error("You must be signed in to create an activity.");
   }
+
+  console.log(API);
 
   const response = await fetch(API + "/activities", {
     method: "POST",
